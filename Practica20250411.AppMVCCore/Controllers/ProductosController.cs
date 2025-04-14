@@ -48,8 +48,8 @@ namespace Practica20250411.AppMVCCore.Controllers
         // GET: Productos/Create
         public IActionResult Create()
         {
-            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Id");
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id");
+            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Nombre");
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre");
             return View();
         }
 
