@@ -66,8 +66,8 @@ namespace Practica20250411.AppMVCCore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Id", producto.BodegaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
+            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Nombre", producto.BodegaId);
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
             return View(producto);
         }
 
@@ -84,8 +84,8 @@ namespace Practica20250411.AppMVCCore.Controllers
             {
                 return NotFound();
             }
-            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Id", producto.BodegaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
+            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Nombre", producto.BodegaId);
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
             return View(producto);
         }
 
@@ -121,8 +121,8 @@ namespace Practica20250411.AppMVCCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Id", producto.BodegaId);
-            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Id", producto.MarcaId);
+            ViewData["BodegaId"] = new SelectList(_context.Bodegas, "Id", "Nombre", producto.BodegaId);
+            ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
             return View(producto);
         }
 
