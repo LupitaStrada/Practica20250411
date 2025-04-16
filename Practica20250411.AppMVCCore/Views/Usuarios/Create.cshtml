@@ -28,9 +28,13 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <input asp-for="Rol" class="form-control" />
+                <label asp-for="Rol" class="control-label"></label>           
+                <select asp-for="Rol">
+                    <option value="Administrador" class="form-control">Administrador</option>
+                    <option value="Operario">Operario</option>
+                </select>
                 <span asp-validation-for="Rol" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

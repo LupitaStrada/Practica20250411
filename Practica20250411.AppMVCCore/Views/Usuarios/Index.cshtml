@@ -18,10 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
+            
                 @Html.DisplayNameFor(model => model.Rol)
             </th>
             <th></th>
@@ -29,16 +26,13 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
+  <tr>           
+      <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
+            </td> 
             <td>
                 @Html.DisplayFor(modelItem => item.Rol)
             </td>
@@ -47,7 +41,8 @@
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
-        </tr>
+       </tr>
+
 }
     </tbody>
 </table>
