@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Practica20250411.AppMVCCore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Practica20250411.AppMVCCore.Controllers
 {
+    [Authorize(Roles ="ADMINISTRADOR")]
     public class UsuariosController : Controller
     {
         private readonly Practica220250411DbContext _context;
@@ -175,7 +180,61 @@ namespace Practica20250411.AppMVCCore.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChancePassword()
+        {
+            int idUser = int.Parse(User.FindFirst("Id").Value);
+            var usuario= await _context.Usuarios.FindAsync(idUser);
+            if (usuario == null)
+            {
+                return NotFound();
+            }           
+            return View(usuario);
+        }
 
+        // POST: Usuarios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChancePassword(int id, [Bind("Id,Password")] Usuario usuario, string passwordAnt)
+        {
+            if (id != usuario.Id)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var passAnt= CalcularHashMD5(passwordAnt);
+                var usuarioData = await _context.Usuarios.FirstOrDefaultAsync(s => s.Id == usuario.Id);
+                if (usuarioData != null && usuarioData.Password == passAnt)
+                {
+                    usuarioData.Password = CalcularHashMD5(usuario.Password);
+                    _context.Update(usuarioData);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    throw new Exception("El password anterior es incorrecto");
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                   ModelState.AddModelError("", ex.Message);
+                    return View(usuario);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+          
+
+        }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Email,Password")] Usuario usuario)
         {
@@ -183,10 +242,17 @@ namespace Practica20250411.AppMVCCore.Controllers
             try
             {
                 usuario.Password =CalcularHashMD5(usuario.Password);
-                var usuarioData = await _context.Usuarios.FirstOrDefaultAsync(s =>s.Email == usuario.Email && s.Password==usuario.Password);
-                if (usuarioData != null && usuarioData.Id > 0)
+                var usuarioAuth = await _context.Usuarios.FirstOrDefaultAsync(s =>s.Email == usuario.Email && s.Password==usuario.Password);
+                if (usuarioAuth != null && usuarioAuth.Id > 0)
                 {
-
+                    var claims = new[] {
+                    new Claim(ClaimTypes.Name, usuarioAuth.Nombre),
+                    new Claim("Id", usuarioAuth.Id.ToString()),
+                     new Claim("Email", usuarioAuth.Email),
+                    new Claim(ClaimTypes.Role, usuarioAuth.Rol)
+                    };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
                     return RedirectToAction("Index","Home");
                 }
                 else
@@ -204,6 +270,13 @@ namespace Practica20250411.AppMVCCore.Controllers
        
 
         }
+        [AllowAnonymous]
+        public async Task<IActionResult> CerrarSession()
+        { 
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+        [AllowAnonymous]
         public IActionResult Login()
         { 
         return View();
