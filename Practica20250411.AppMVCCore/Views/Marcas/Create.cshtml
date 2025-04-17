@@ -8,31 +8,61 @@
 
 <h4>Marca</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagenBytes" class="control-label"></label>
-                <input asp-for="ImagenBytes" class="form-control" />
-                <span asp-validation-for="ImagenBytes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Nombre" class="control-label"></label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="form-group col-4">
+            <label for="file" class="control-label">Imagen</label>
+            <input type="file" id="imageFile" name="file" class="form-control" accept="image/*" />
+        </div>
+        <div class="col-4">
+            <div id="preview" style="display: none;">
+                <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="max-width: 200px; max-height: 200px;">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<script>
+    document.getElementById('imageFile').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('preview');
+        const imagePreview = document.getElementById('imagePreview');
 
+        if (file) {
+            const fileReader = new FileReader();
+
+            fileReader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            fileReader.readAsDataURL(file);
+        } else {
+            imagenPrevia.src = '#';
+            preview.style.display = 'none';
+        }
+    });
+</script>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

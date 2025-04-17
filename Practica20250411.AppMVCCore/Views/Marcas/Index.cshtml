@@ -28,12 +28,18 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImagenBytes)
+                    @if (item.ImagenBytes != null && item.ImagenBytes.Length > 0)
+                    {
+                        string base64Image = Convert.ToBase64String(item.ImagenBytes);
+                        string imageUrl = $"data:image/png;base64,{base64Image}";
+                        <img src="@imageUrl" alt="Imagen" style="max-width: 75px; max-height: 75px;" />
+                    }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>|
+                    <a asp-action="EliminarImage" asp-route-id="@item.Id">Eliminar Imagen</a>
             </td>
         </tr>
 }

@@ -21,7 +21,12 @@
             @Html.DisplayNameFor(model => model.ImagenBytes)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagenBytes)
+            @if (Model.ImagenBytes != null && Model.ImagenBytes.Length > 0)
+            {
+                string base64Image = Convert.ToBase64String(Model.ImagenBytes);
+                string imageUrl = $"data:image/png;base64,{base64Image}";
+                <img src="@imageUrl" alt="Imagen" style="max-width: 75px; max-height: 200px;" />
+            }
         </dd>
     </dl>
     

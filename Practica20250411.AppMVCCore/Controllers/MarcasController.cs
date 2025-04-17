@@ -19,7 +19,20 @@ namespace Practica20250411.AppMVCCore.Controllers
         {
             _context = context;
         }
-
+        public async Task<byte[]?> GenerarByteImage(IFormFile? file, byte[]? bytesImage = null)
+        {
+            byte[]? bytes = bytesImage;
+            if (file != null && file.Length > 0)
+            {
+                // Construir la ruta del archivo               
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    bytes = memoryStream.ToArray(); // Devuelve los bytes del archivo
+                }
+            }
+            return bytes;
+        }
         // GET: Marcas
         public async Task<IActionResult> Index()
         {
@@ -55,10 +68,11 @@ namespace Practica20250411.AppMVCCore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,ImagenBytes")] Marca marca)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,ImagenBytes")] Marca marca, IFormFile? file = null)
         {
             if (ModelState.IsValid)
             {
+                marca.ImagenBytes = await GenerarByteImage(file);
                 _context.Add(marca);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,7 +101,7 @@ namespace Practica20250411.AppMVCCore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,ImagenBytes")] Marca marca)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,ImagenBytes")] Marca marca, IFormFile? file = null)
         {
             if (id != marca.Id)
             {
@@ -98,6 +112,10 @@ namespace Practica20250411.AppMVCCore.Controllers
             {
                 try
                 {
+                    var byteImagesAnterior = await _context.Marcas
+                        .Where(s => s.Id == marca.Id)
+                        .Select(s => s.ImagenBytes).FirstOrDefaultAsync();
+                    marca.ImagenBytes = await GenerarByteImage(file);
                     _context.Update(marca);
                     await _context.SaveChangesAsync();
                 }
@@ -153,6 +171,22 @@ namespace Practica20250411.AppMVCCore.Controllers
         private bool MarcaExists(int id)
         {
             return _context.Marcas.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> EliminarImage(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var marca = await _context.Marcas.FindAsync(id);
+            if (marca == null)
+            {
+                return NotFound();
+            }           
+                marca.ImagenBytes = null;
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
         }
     }
 }
