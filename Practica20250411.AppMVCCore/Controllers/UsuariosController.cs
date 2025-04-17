@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Practica20250411.AppMVCCore.Controllers
 {
-    [Authorize(Roles ="ADMINISTRADOR")]
+    
     public class UsuariosController : Controller
     {
         private readonly Practica220250411DbContext _context;
@@ -24,13 +24,13 @@ namespace Practica20250411.AppMVCCore.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,13 +48,13 @@ namespace Practica20250411.AppMVCCore.Controllers
 
             return View(usuario);
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // POST: Usuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -83,8 +83,8 @@ namespace Practica20250411.AppMVCCore.Controllers
             }
 
 
-        }   
-
+        }
+        [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -100,7 +100,7 @@ namespace Practica20250411.AppMVCCore.Controllers
             }
             return View(usuario);
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -142,7 +142,7 @@ namespace Practica20250411.AppMVCCore.Controllers
             return RedirectToAction(nameof(Index));
          
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -160,7 +160,7 @@ namespace Practica20250411.AppMVCCore.Controllers
 
             return View(usuario);
         }
-
+        [Authorize(Roles = "ADMINISTRADOR")]
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -180,9 +180,7 @@ namespace Practica20250411.AppMVCCore.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
-        [AllowAnonymous]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize (Roles ="ADMINISTRADOR,OPERARIO")]
         public async Task<IActionResult> ChancePassword()
         {
             int idUser = int.Parse(User.FindFirst("Id").Value);
@@ -197,8 +195,10 @@ namespace Practica20250411.AppMVCCore.Controllers
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMINISTRADOR,OPERARIO")]
         public async Task<IActionResult> ChancePassword(int id, [Bind("Id,Password")] Usuario usuario, string passwordAnt)
         {
             if (id != usuario.Id)
