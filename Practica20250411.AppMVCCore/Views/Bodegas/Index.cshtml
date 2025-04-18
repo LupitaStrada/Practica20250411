@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<Practica20250411.AppMVCCore.Models.Bodega>
 
     @{
-        ViewData["Title"] = "Buscar Clientes";      
+        ViewData["Title"] = "Buscar Bodega";  
+        var modelBuscar = new Bodega();
     }
-    <h1>Index</h1>
+<h1>Buscar Bodega</h1>
 
     <p>
-        <a asp-action="Create">Crear Nuevo</a>
+    <a asp-action="Create" class="btn btn-outline-danger">Crear Nuevo</a>
     </p>
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
                 <th>
@@ -30,18 +31,25 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Notas)
                     </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success" title="Editar"> <i class="bi bi-pencil"></i></a>                                
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success" title="Detalles"><i class=" bi bi-eye"></i></a>                                 
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
-                              </td>
-                            </tr>
-                        </table>
-                    </td>
+                     <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success" title="Editar"> <i class="bi bi-pencil"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles"><i class=" bi bi-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                    </td>                                     
                 </tr>
             }
         </tbody>
     </table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                searching: false,
+                ordering: false,
+                 "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
+}

@@ -34,9 +34,15 @@ namespace Practica20250411.AppMVCCore.Controllers
             return bytes;
         }
         // GET: Marcas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Marca marca, int topRegistro=10)
         {
-            return View(await _context.Marcas.ToListAsync());
+            var query = _context.Marcas.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(marca.Nombre))
+                query = query.Where(s => s.Nombre.Contains(marca.Nombre));           
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+            return View(await query.ToListAsync());
+           
         }
 
         // GET: Marcas/Details/5

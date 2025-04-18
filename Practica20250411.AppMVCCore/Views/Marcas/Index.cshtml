@@ -1,15 +1,45 @@
 ﻿@model IEnumerable<Practica20250411.AppMVCCore.Models.Marca>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Marcas";
+    var modelBuscar = new Marca();
 }
 
-<h1>Index</h1>
-
+<h1>Marcas</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nuevo</a>
 </p>
-<table class="table">
+<form asp-action="Index">
+    <div class="row">
+        <div class="form-group col-4">
+            <label asp-for="@modelBuscar.Nombre" class="control-label"></label>
+            <input name="nombre" class="form-control" />
+        </div>        
+    </div>
+    <div class="row">
+        <div class="form-group col-3">
+            <label>Cant. Registros</label>
+            <select name="topRegistro" class="form-control">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="0">Todos</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row mt-3">
+            <div class="form-group mt-3 mb-3">
+                <input type="submit" value="Buscar" class="btn btn-primary" />
+                <a asp-action="Create" class=" btn btn-info"><i class="bi bi-plus-circle" title="Ir a crear"></i></a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table" id="myTable" >
     <thead>
         <tr>
             <th>
@@ -20,7 +50,9 @@
             </th>
             <th></th>
         </tr>
+      
     </thead>
+
     <tbody>
 @foreach (var item in Model) {
         <tr>
@@ -36,12 +68,26 @@
                     }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>|
-                    <a asp-action="EliminarImage" asp-route-id="@item.Id">Eliminar Imagen</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success" title="Editar"><i class="bi bi-pencil"></i></a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles"><i class=" bi bi-eye"></i></a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                    <a asp-action="EliminarImage" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar imagen"><i class="bi bi-dash-circle"></i></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                searching: false,
+                ordering: false,
+                 "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
+}
