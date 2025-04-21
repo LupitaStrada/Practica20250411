@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear nuevo</h1>
 
 <h4>Usuario</h4>
 <hr />
@@ -27,25 +27,25 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <div class="row mt-3">
             <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>           
-
+                <label asp-for="Rol" class="control-label"></label>
+              
                 <select asp-for="Rol">
-                    <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                    <option value="OPERARIO">OPERARIO</option>
+                    <option value="ADMINISTRADOR" class="text-danger">ADMINISTRADOR</option>
+                    <option value="OPERARIO" class="text-danger">OPERARIO</option>
                 </select>
-                <span asp-validation-for="Rol" class="text-danger"></span>
-
+                <span asp-validation-for="Rol"></span>
+              </div>
             </div>
+            <div class="row mt-3">
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-info">Cancelar</a>
+                </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+    </div>   
 </div>
 
 @section Scripts {

@@ -21,9 +21,15 @@ namespace Practica20250411.AppMVCCore.Controllers
         }
 
         // GET: Bodegas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Bodega bodega, int topRegistro=10)
         {
-            return View(await _context.Bodegas.ToListAsync());
+            var query = _context.Bodegas.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(bodega.Nombre))
+                query = query.Where(s => s.Nombre.Contains(bodega.Nombre));
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+            return View(await query.ToListAsync());
+            
         }
 
         // GET: Bodegas/Details/5

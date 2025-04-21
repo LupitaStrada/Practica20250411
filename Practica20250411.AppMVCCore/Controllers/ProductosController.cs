@@ -21,10 +21,20 @@ namespace Practica20250411.AppMVCCore.Controllers
         }
 
         // GET: Productos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( Producto producto, int topRegistro=10)
         {
-            var practica220250411DbContext = _context.Productos.Include(p => p.Bodega).Include(p => p.Marca);
-            return View(await practica220250411DbContext.ToListAsync());
+            var query = _context.Productos.AsQueryable();
+            query = query.Include(p => p.Bodega).Include(p => p.Marca);
+            if (!string.IsNullOrWhiteSpace(producto.Nombre))
+                query = query.Where(s => s.Nombre.Contains(producto.Nombre));
+            if (!string.IsNullOrWhiteSpace(producto.Precio.ToString()));
+                query = query.Where(s => s.Precio.ToString().Contains(producto.Precio.ToString()));
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+           
+            return View(await query.ToListAsync());
+
+           
         }
 
         // GET: Productos/Details/5

@@ -26,9 +26,19 @@ namespace Practica20250411.AppMVCCore.Controllers
         }
         [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Usuario usuario, int topRegistro=10)
+
         {
-            return View(await _context.Usuarios.ToListAsync());
+            var query = _context.Usuarios.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(usuario.Nombre))
+                query = query.Where(s => s.Nombre.Contains(usuario.Nombre));
+
+            if (!string.IsNullOrWhiteSpace(usuario.Email))
+                query = query.Where(s => s.Email.Contains(usuario.Email));
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+            return View(await query.ToListAsync());
+         
         }
         [Authorize(Roles = "ADMINISTRADOR")]
         // GET: Usuarios/Details/5
