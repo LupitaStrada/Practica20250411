@@ -4,31 +4,31 @@
     ViewData["Title"] = "Crear Producto";
 }
 
-<h1>Crear</h1>
+<h1 class="text-light">Crear</h1>
 
-<h4>Producto</h4>
+<h4 class="text-light">Producto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" class="text-light">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Nombre" class="control-label text-light"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
+                <label asp-for="Descripcion" class="control-label text-light"></label>
+                <input asp-for="Descripcion" class="form-control"/>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
+                <label asp-for="Precio" class="control-label text-light"></label>
                 <input asp-for="Precio" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BodegaId" class="control-label"></label>
+                <label asp-for="BodegaId" class="control-label text-light"></label>
                 <select asp-for="BodegaId" class ="form-control" asp-items="ViewBag.BodegaId"></select>
             </div>
             <div class="form-group">
