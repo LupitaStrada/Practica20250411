@@ -28,7 +28,9 @@ namespace Practica20250411.AppMVCCore.Controllers
                 query = query.Where(s => s.Nombre.Contains(bodega.Nombre));
             if (topRegistro > 0)
                 query = query.Take(topRegistro);
+            query=query.OrderByDescending(s => s.Id);
             return View(await query.ToListAsync());
+
             
         }
 

@@ -5,12 +5,12 @@
     var modelBuscar = new Marca();
 }
 
-<h1>Marcas</h1>
+<h1 class ="text-light">Buscar Marcas</h1>
 
-<form asp-action="Index">
+<form asp-action="Index" class="text-light">
     <div class="row">
         <div class="form-group col-4">
-            <label asp-for="@modelBuscar.Nombre" class="control-label"></label>
+            <label asp-for="@modelBuscar.Nombre" class="control-label text-light"></label>
             <input name="nombre" class="form-control" />
         </div>        
     </div>
@@ -39,10 +39,10 @@
 <table class="table" id="myTable" >
     <thead>
         <tr>
-            <th>
+            <th class="text-light">
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
-            <th>
+            <th class="text-light">
                 @Html.DisplayNameFor(model => model.ImagenBytes)
             </th>
             <th></th>
@@ -52,7 +52,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+                <td class="text-light">
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
@@ -63,7 +63,7 @@
                         <img src="@imageUrl" alt="Imagen" style="max-width: 75px; max-height: 75px;" />
                     }
             </td>
-            <td>
+                <td class="text-light">
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success" title="Editar"><i class="bi bi-pencil"></i></a> 
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles"><i class=" bi bi-eye"></i></a> 
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill"></i></a>

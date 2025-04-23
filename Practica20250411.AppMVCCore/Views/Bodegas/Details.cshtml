@@ -4,22 +4,22 @@
     ViewData["Title"] = "Detalle de Bodega";
 }
 
-<h1>Detalle</h1>
+<h1 class ="text-light">Detalle</h1>
 
 <div>
-    <h4>Bodega</h4>
+    <h4 class="text-light">Bodega</h4>
     <hr />
     <dl class="row">
-        <div class = "col-sm-2">
+        <div class = "col-sm-2 text-light">
             @Html.DisplayNameFor(model => model.Nombre)
         </div>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 text-light">
             @Html.DisplayNameFor(model => model.Notas)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-10 text-light">
             @Html.DisplayFor(model => model.Notas)
         </dd>
     </dl>

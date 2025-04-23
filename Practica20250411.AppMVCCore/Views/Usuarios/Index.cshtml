@@ -4,16 +4,16 @@
 	ViewData["Title"] = "Usuarios";
 	var modelBuscar = new Usuario();
 }
-<h1>Usuario</h1>
+<h1 class="text-light">Usuario</h1>
 
-<form asp-action="Index">
+<form asp-action="Index" class="text-light">
 	<div class="row">
 		<div class="form-group col-4">
 			<label asp-for="@modelBuscar.Nombre" class="control-label"></label>
 			<input name="nombre" class="form-control" />
 		</div>
 		<div class="form-group col-4">
-			<label asp-for="@modelBuscar.Email" class="control-label"></label>
+			<label asp-for="@modelBuscar.Email" class="control-label text-light"></label>
 			<input name="email" class="form-control" />
 		</div>
 	</div>
@@ -42,10 +42,10 @@
 <table class="table" id="myTable">
 	<thead>
 		<tr>
-			<th>
+			<th class="text-light">
 				@Html.DisplayNameFor(model => model.Nombre)
 			</th>
-			<th>
+			<th class="text-light">
 				@Html.DisplayNameFor(model => model.Email)
 			</th>
 			<th>
@@ -59,10 +59,10 @@
 		@foreach (var item in Model)
 		{
 			<tr>
-				<td>
+				<td class="text-light">
 					@Html.DisplayFor(modelItem => item.Nombre)
 				</td>
-				<td>
+				<td class="text-light">
 					@Html.DisplayFor(modelItem => item.Email)
 				</td>
 				<td>

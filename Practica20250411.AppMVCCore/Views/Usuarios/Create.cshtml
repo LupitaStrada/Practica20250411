@@ -4,32 +4,32 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear nuevo</h1>
+<h1 class="text-light">Crear nuevo</h1>
 
-<h4>Usuario</h4>
+<h4 class="text-light">Usuario</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" class="text-light">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Nombre" class="control-label text-light"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label text-light"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label text-light"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="row mt-3">
             <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
+                <label asp-for="Rol" class="control-label text-light"></label>
               
                 <select asp-for="Rol">
                     <option value="ADMINISTRADOR" class="text-danger">ADMINISTRADOR</option>

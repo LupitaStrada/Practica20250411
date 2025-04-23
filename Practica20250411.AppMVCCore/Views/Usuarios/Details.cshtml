@@ -4,28 +4,28 @@
     ViewData["Title"] = "Detalle";
 }
 
-<h1>Detalle</h1>
+<h1 class="text-light">Detalle</h1>
 
 <div>
-    <h4>Usuario</h4>
+    <h4 class="text-light">Usuario</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 text-light">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10 text-light ">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 text-light">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10 text-light ">
             @Html.DisplayFor(model => model.Email)
         </dd>      
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-2 text-light">
             @Html.DisplayNameFor(model => model.Rol)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10 text-light">
             @Html.DisplayFor(model => model.Rol)
         </dd>
     </dl>
